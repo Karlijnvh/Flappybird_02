@@ -303,8 +303,7 @@ def draw_window(win, birds, pipes, base, score, gen, pipe_ind):
     win.blit(score_label, (10, 50))
 
     pygame.display.update()
-
-#stap 6, eval_genomes(win) --> eval_genomes(genomes, config), zo heb je twee parameters 
+#stap 4, eval_genomes(win) --> evalgenomes(genomes, config), zo heb je twee parameters 
 def eval_genomes(genomes, config):
     """
     runs the simulation of the current population of
