@@ -303,8 +303,7 @@ def draw_window(win, birds, pipes, base, score, gen, pipe_ind):
     win.blit(score_label, (10, 50))
 
     pygame.display.update()
-
-
+#stap 6, eval_genomes(win) --> evalgenomes(genomes, config), zo heb je twee parameters 
 def eval_genomes(genomes, config):
     """
     runs the simulation of the current population of
@@ -315,11 +314,8 @@ def eval_genomes(genomes, config):
     win = WIN
     gen += 1
 
-    # start by creating lists holding the genome itself, the
-    # neural network associated with the genome and the
-    # bird object that uses that network to play
     nets = []
-    birds = []
+    birds = [] # stap 7 Bird= Bird(230,350) --> birds = [], zodat er meerdere vogels tegelijker tijd kunnen starten
     ge = []
     for genome_id, genome in genomes:
         genome.fitness = 0  # start with fitness level of 0
@@ -390,7 +386,6 @@ def eval_genomes(genomes, config):
 
         for r in rem:
             pipes.remove(r)
-
         for bird in birds:
             if bird.y + bird.img.get_height() - 10 >= FLOOR or bird.y < -50:
                 nets.pop(birds.index(bird))
@@ -405,7 +400,7 @@ def eval_genomes(genomes, config):
             break'''
 
 
-def run(config_file):
+def run(config_file): # stap 2 al deze neat dingen staan in de configuration file
     """
     runs the NEAT algorithm to train a neural network to play flappy bird.
     :param config_file: location of config file
@@ -415,17 +410,17 @@ def run(config_file):
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_file)
 
-    # Create the population, which is the top-level object for a NEAT run.
+    # stap 3 hier wordt een populatie gemaakt hieruit kunnen later dan de beste vogels worden geselecteerd
     p = neat.Population(config)
 
-    # Add a stdout reporter to show progress in the terminal.
+    
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-    #p.add_reporter(neat.Checkpointer(5))
+       #stap 4hier worden de besten uit de populatie gehaald
 
-    # Run for up to 50 generations.
-    winner = p.run(eval_genomes, 5)
+    #stap 5 Hier runt het programma voor 50 generaties/ 50 keer
+    winner = p.run(eval_genomes, 50)
 
     # show final stats
     print('\nBest genome:\n{!s}'.format(winner))
